@@ -135,55 +135,26 @@ const WalletRoaster = () => {
     setRoast('');
 
     try {
-      // In production, fetch real wallet data from Solana blockchain
-      // For demo, we'll create mock data
-      const mockWalletData = {
-        tokens: [
-          { name: 'SOL', amount: Math.random() * 10, value: Math.random() * 1000 },
-          { name: 'BONK', amount: Math.random() * 1000000, value: Math.random() * 100 },
-          { name: 'JUP', amount: Math.random() * 500, value: Math.random() * 200 },
-          { name: 'WIF', amount: Math.random() * 50, value: Math.random() * 150 },
+      // CRITIQUES DE TEST (pour développement local)
+      const mockRoasts = {
+        fr: [
+          "😂 Alors comme ça on investit dans BONK ? Ton portefeuille ressemble à une blague qui a mal tourné ! Même mon chat fait de meilleurs choix financiers !",
+          "🐕 WIF, BONK, PEPE... T'as transformé ton wallet en ménagerie ou quoi ? Le zoo de Vincennes a moins d'animaux que ton portfolio !",
+          "💀 Sérieux, avec un portefeuille pareil, j'espère que t'as gardé ton CV à jour ! Même un singe qui lance des fléchettes sur CoinGecko fait mieux !",
+          "🎰 Ton wallet c'est comme un casino, sauf que toi tu perds à tous les coups ! La roulette russe financière version crypto !",
+          "🤡 T'as acheté au sommet et vendu au creux, la stratégie classique du débutant ! Bravo champion, continues comme ça tu vas finir millionnaire... en shitcoins !"
         ],
-        nfts: Math.floor(Math.random() * 20),
-        totalValue: Math.random() * 5000,
-        transactionCount: Math.floor(Math.random() * 500),
+        en: [
+          "😂 So you're investing in BONK? Your portfolio looks like a joke that went wrong! Even my cat makes better financial choices!",
+          "🐕 WIF, BONK, PEPE... Did you turn your wallet into a zoo or what? The local zoo has fewer animals than your portfolio!",
+          "💀 Seriously, with a portfolio like that, I hope you kept your resume updated! Even a monkey throwing darts at CoinGecko does better!",
+          "🎰 Your wallet is like a casino, except you lose every time! Financial Russian roulette crypto edition!",
+          "🤡 You bought at the top and sold at the bottom, the classic beginner strategy! Well done champ, keep it up and you'll end up a millionaire... in shitcoins!"
+        ]
       };
 
-      setWalletData(mockWalletData);
-
-      // Generate AI roast using Claude
-      const roastPrompt = language === 'fr' 
-        ? `Tu es un pote qui chambre gentiment son ami sur son portefeuille crypto. Génère une critique humoristique et amicale (pas méchante) en français du portefeuille suivant. Utilise un ton de pote qui se moque gentiment, avec des blagues sur les tokens meme, les choix d'investissement, etc. Maximum 4-5 phrases courtes et percutantes.
-
-Portefeuille:
-- Tokens: ${mockWalletData.tokens.map(t => `${t.name} (${t.amount.toFixed(2)})`).join(', ')}
-- NFTs: ${mockWalletData.nfts}
-- Valeur totale: $${mockWalletData.totalValue.toFixed(2)}
-- Transactions: ${mockWalletData.transactionCount}`
-        : `You're a friend playfully roasting your buddy about their crypto portfolio. Generate a humorous and friendly (not mean) roast in English about the following wallet. Use a friendly tone with jokes about meme tokens, investment choices, etc. Maximum 4-5 short punchy sentences.
-
-Wallet:
-- Tokens: ${mockWalletData.tokens.map(t => `${t.name} (${t.amount.toFixed(2)})`).join(', ')}
-- NFTs: ${mockWalletData.nfts}
-- Total value: $${mockWalletData.totalValue.toFixed(2)}
-- Transactions: ${mockWalletData.transactionCount}`;
-
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [
-            { role: "user", content: roastPrompt }
-          ],
-        })
-      });
-
-      const data = await response.json();
-      const generatedRoast = data.content.find(block => block.type === 'text')?.text || t.error;
+      const roastList = mockRoasts[language];
+      const generatedRoast = roastList[Math.floor(Math.random() * roastList.length)];
       
       setRoast(generatedRoast);
     } catch (error) {
