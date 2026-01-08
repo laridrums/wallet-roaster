@@ -135,6 +135,21 @@ const WalletRoaster = () => {
     setRoast('');
 
     try {
+      // CRÉER LES DONNÉES DU WALLET D'ABORD
+      const mockWalletData = {
+        tokens: [
+          { name: 'SOL', amount: Math.random() * 10, value: Math.random() * 1000 },
+          { name: 'BONK', amount: Math.random() * 1000000, value: Math.random() * 100 },
+          { name: 'JUP', amount: Math.random() * 500, value: Math.random() * 200 },
+          { name: 'WIF', amount: Math.random() * 50, value: Math.random() * 150 },
+        ],
+        nfts: Math.floor(Math.random() * 20),
+        totalValue: Math.random() * 5000,
+        transactionCount: Math.floor(Math.random() * 500),
+      };
+
+      setWalletData(mockWalletData);
+
       // Vérifier si on a une clé API
       const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
       
@@ -182,10 +197,10 @@ Make a personalized roast based on this real data. Mention the specific tokens a
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: {
-          "Content-Type": "application/json",
-          "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01"
-        },
+            "Content-Type": "application/json",
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01"
+          },
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
             max_tokens: 1000,
