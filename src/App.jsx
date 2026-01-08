@@ -182,10 +182,10 @@ Make a personalized roast based on this real data. Mention the specific tokens a
         const response = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "x-api-key": apiKey,
-            "anthropic-version": "2023-06-01"
-          },
+          "Content-Type": "application/json",
+          "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01"
+        },
           body: JSON.stringify({
             model: "claude-sonnet-4-20250514",
             max_tokens: 1000,
